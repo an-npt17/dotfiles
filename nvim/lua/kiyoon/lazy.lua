@@ -2353,4 +2353,27 @@ return {
       }
     end,
   },
+{
+  'vyfor/cord.nvim',
+  build = './build || .\\build',
+  event = 'VeryLazy',
+  opts = {}, -- calls require('cord').setup()
+          config = function()
+            require('cord').setup({
+                file_tree = {
+                    ignore = {
+                        '.git',          -- Hide .git folder
+                        'node_modules',  -- Hide node_modules folder
+                        '__pycache__',   -- Hide Python cache folder
+                        '.DS_Store',     -- Ignore macOS system files
+                        '.env',          -- Hide environment files
+						'dotfiles',
+						'silero-vad',
+						'news-aggregator',
+                    }
+                }
+            })
+        end
+
+},
 }

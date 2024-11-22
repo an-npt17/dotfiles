@@ -11,12 +11,13 @@ local neovim_version_str = string.format(
 )
 
 dashboard.section.header.val = {
-  [[                               __                ]],
-  [[  ___     ___    ___   __  __ /\_\    ___ ___    ]],
-  [[ / _ `\  / __`\ / __`\/\ \/\ \\/\ \  / __` __`\  ]],
-  [[/\ \/\ \/\  __//\ \_\ \ \ \_/ |\ \ \/\ \/\ \/\ \ ]],
-  [[\ \_\ \_\ \____\ \____/\ \___/  \ \_\ \_\ \_\ \_\]],
-  [[ \/_/\/_/\/____/\/___/  \/__/    \/_/\/_/\/_/\/_/]] .. neovim_version_str,
+  [[ ________   _______    _____ ______    ________   ________    ___        ________   ___      ___  _______    ________       ]],
+  [[|\   ___ \ |\  ___ \  |\   _ \  _   \ |\   __  \ |\   ___  \ |\  \      |\   __  \ |\  \    /  /||\  ___ \  |\   __  \      ]],
+  [[\ \  \_|\ \\ \   __/| \ \  \\\__\ \  \\ \  \|\  \\ \  \\ \  \\ \  \     \ \  \|\  \\ \  \  /  / /\ \   __/| \ \  \|\  \     ]],
+  [[ \ \  \ \\ \\ \  \_|/__\ \  \\|__| \  \\ \  \\\  \\ \  \\ \  \\ \  \     \ \  \\\  \\ \  \/  / /  \ \  \_|/__\ \   _  _\    ]],
+  [[  \ \  \_\\ \\ \  \_|\ \\ \  \    \ \  \\ \  \\\  \\ \  \\ \  \\ \  \____ \ \  \\\  \\ \    / /    \ \  \_|\ \\ \  \\  \|   ]],
+  [[   \ \_______\\ \_______\\ \__\    \ \__\\ \_______\\ \__\\ \__\\ \_______\\ \_______\\ \__/ /      \ \_______\\ \__\\ _\   ]],
+  [[    \|_______| \|_______| \|__|     \|__| \|_______| \|__| \|__| \|_______| \|_______| \|__|/        \|_______| \|__|\|__|  ]] .. neovim_version_str,
 }
 
 local plugins_config_path = vim.fn.stdpath "config" .. "/lua/kiyoon/lazy.lua"
@@ -34,7 +35,6 @@ dashboard.section.buttons.val = {
     "<cmd>lua require'telescope'<cr><cmd>lua require'kiyoon.telescope'.live_grep_gitdir()<cr>"
   ),
   dashboard.button("d", " " .. " Diff view (\\dv)", "<cmd>DiffviewOpen<CR>"),
-  dashboard.button("C", " " .. " ChatGPT (\\cg)", "<cmd>GpChatNew<CR>"),
   dashboard.button("l", " " .. " Install language support (:Mason)", ":Mason<CR>"),
   dashboard.button("p", " " .. " Plugins", "<cmd>Lazy<CR>"),
   dashboard.button("P", " " .. " Plugins config", ":e " .. plugins_config_path .. "<CR>"),
@@ -70,7 +70,7 @@ vim.api.nvim_create_autocmd("User", {
     local stats = require("lazy").stats()
     local ms = (math.floor(stats.startuptime * 100 + 0.5) / 100)
     dashboard.section.footer.val = {
-      "https://github.com/kiyoon/dotfiles",
+      "👍               good code bro",
       "⚡ Neovim loaded " .. stats.count .. " plugins in " .. ms .. "ms",
     }
     pcall(vim.cmd.AlphaRedraw)
