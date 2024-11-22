@@ -1,4 +1,4 @@
-export TZ=Asia/Seoul
+export TZ=Asia/Ho_Chi_Minh
 
 if [[ -d "$HOME/bin/miniforge3" ]]; then
 	export MINICONDA_PATH="$HOME/bin/miniforge3"

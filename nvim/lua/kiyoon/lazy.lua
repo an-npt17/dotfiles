@@ -18,6 +18,70 @@ return {
     end,
   },
   {
+    -- add dracula
+    { "Mofiqul/dracula.nvim" },
+
+    -- Configure LazyVim to load dracula
+    {
+      "LazyVim/LazyVim",
+      opts = {
+        colorscheme = "dracula",
+      },
+    },
+  },
+  {
+    "folke/snacks.nvim",
+    priority = 1000,
+    lazy = false,
+    opts = {
+      -- your configuration comes here
+      -- or leave it empty to use the default settings
+      -- refer to the configuration section below
+      bigfile = { enabled = false },
+      notifier = { enabled = true },
+      quickfile = { enabled = true },
+      statuscolumn = { enabled = true },
+      words = { enabled = true },
+    },
+  },
+  {
+    { "rebelot/kanagawa.nvim" },
+    {
+      "LazyVim/LazyVim",
+      opts = {},
+    },
+  },
+  {
+    "EdenEast/nightfox.nvim",
+
+    opts = {
+
+      -- options = {
+      --
+      -- styles = {
+      --
+      -- comments = "italic",
+      --
+      -- conditionals = "italic",
+      --
+      -- keywords = "italic,bold",
+      --
+      -- types = "italic,bold",
+      --
+      -- variables = "bold"
+      --
+      -- }
+      -- }
+    },
+  },
+  {
+    "sho-87/kanagawa-paper.nvim",
+    lazy = false,
+    priority = 1000,
+    opts = {},
+  },
+
+  {
     "kiyoon/tmuxsend.vim",
     keys = {
       {
@@ -49,22 +113,6 @@ return {
   },
 
   --- NOTE: Python
-  {
-    -- There are four types of python highlighting.
-    -- 1. Default vim python (syntax highlighting)
-    -- 2. This plugin (syntax highlighting)
-    -- 3. nvim-treesitter (syntax highlighting)
-    -- 4. basedpyright (semantic highlighting)
-    --
-    -- I want to use 4, so I disabled 3 which is distracting. (It's good but too much color)
-    -- However, then it was sometimes confusing if f-strings were actually f-strings. (the values were not highlighted)
-    -- with this plugin (2), I can see the f-strings are actually f-strings, but it doesn't hurt the 4.
-    "vim-python/python-syntax",
-    ft = "python",
-    init = function()
-      vim.g.python_highlight_all = 1
-    end,
-  },
   {
     "kiyoon/python-import.nvim",
     build = "uv tool install . --force --reinstall",
@@ -159,7 +207,7 @@ return {
           if word:match "_DIR$" then
             return { "from " .. first_module .. " import " .. word }
           elseif word == "setup_logging" then
-            return { "from " .. first_module .. " import setup_logging" }
+            return { "from " .. first_module .. ".utils.log import setup_logging" }
           end
         end
       end,
@@ -655,37 +703,6 @@ return {
       { "<space>nn", "<cmd>Neotree toggle<CR>", mode = { "n", "x" }, desc = "[N]eotree toggle" },
     },
   },
-  {
-    "stevearc/oil.nvim",
-    -- cond = function()
-    --   return vim.fn.isdirectory(vim.fn.expand "%:p") == 1
-    -- end,
-    config = function()
-      require("oil").setup {
-        keymaps = {
-          ["\\"] = { "actions.select", opts = { vertical = true }, desc = "Open the entry in a vertical split" },
-          ["|"] = { "actions.select", opts = { horizontal = true }, desc = "Open the entry in a horizontal split" },
-          ["<C-r>"] = "actions.refresh",
-          ["g?"] = "actions.show_help",
-          ["<CR>"] = "actions.select",
-          ["<C-t>"] = { "actions.select", opts = { tab = true }, desc = "Open the entry in new tab" },
-          ["<C-p>"] = "actions.preview",
-          ["<C-c>"] = "actions.close",
-          ["-"] = "actions.parent",
-          ["_"] = "actions.open_cwd",
-          ["`"] = "actions.cd",
-          ["~"] = { "actions.cd", opts = { scope = "tab" }, desc = ":tcd to the current oil directory" },
-          ["gs"] = "actions.change_sort",
-          ["gx"] = "actions.open_external",
-          ["g."] = "actions.toggle_hidden",
-          ["g\\"] = "actions.toggle_trash",
-        },
-        use_default_keymaps = false,
-      }
-    end,
-  },
-
-  --- NOTE: Treesitter: Better syntax highlighting, text objects, refactoring, context
   {
     "nvim-treesitter/nvim-treesitter",
     event = { "BufReadPost", "BufNewFile" },
@@ -1359,7 +1376,7 @@ return {
           },
         },
       },
-      -- { "saghen/blink.cmp" },
+      -- "folke/neodev.nvim",
     },
     config = function()
       require "kiyoon.lsp"
@@ -1383,56 +1400,6 @@ return {
       require "kiyoon.cmp"
     end,
   },
-  -- {
-  --   "saghen/blink.cmp",
-  --   lazy = false, -- lazy loading handled internally
-  --   -- optional: provides snippets for the snippet source
-  --   dependencies = {
-  --     "rafamadriz/friendly-snippets",
-  --   },
-  --   -- use a release tag to download pre-built binaries
-  --   version = "v0.*",
-  --
-  --   ---@module 'blink.cmp'
-  --   ---@type blink.cmp.Config
-  --   opts = {
-  --     -- 'default' for mappings similar to built-in completion
-  --     -- 'super-tab' for mappings similar to vscode (tab to accept, arrow keys to navigate)
-  --     -- 'enter' for mappings similar to 'super-tab' but with 'enter' to accept
-  --     -- see the "default configuration" section below for full documentation on how to define
-  --     -- your own keymap.
-  --     keymap = { preset = "default" },
-  --
-  --     highlight = {
-  --       -- sets the fallback highlight groups to nvim-cmp's highlight groups
-  --       -- useful for when your theme doesn't support blink.cmp
-  --       -- will be removed in a future release, assuming themes add support
-  --       use_nvim_cmp_as_default = true,
-  --     },
-  --     -- set to 'mono' for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
-  --     -- adjusts spacing to ensure icons are aligned
-  --     nerd_font_variant = "mono",
-  --
-  --     -- experimental auto-brackets support
-  --     -- accept = { auto_brackets = { enabled = true } }
-  --
-  --     -- experimental signature help support
-  --     -- trigger = { signature_help = { enabled = true } }
-  --
-  --     windows = {
-  --       autocomplete = {
-  --         -- Controls how the completion items are selected
-  --         -- 'preselect' will automatically select the first item in the completion list
-  --         -- 'manual' will not select any item by default
-  --         -- 'auto_insert' will not select any item by default, and insert the completion items automatically when selecting them
-  --         selection = "auto_insert",
-  --       },
-  --     },
-  --   },
-  --   -- allows extending the enabled_providers array elsewhere in your config
-  --   -- without having to redefining it
-  --   opts_extend = { "sources.completion.enabled_providers" },
-  -- },
   -- {
   --   "kiyoon/lsp-inlayhints.nvim",
   --   event = "LSPAttach",
@@ -1633,26 +1600,12 @@ return {
     "smjonas/inc-rename.nvim",
     keys = {
       {
-        "<space>pR",
+        "<space>pr",
         function()
           return ":IncRename " .. vim.fn.expand "<cword>"
         end,
         expr = true,
-        desc = "[R]ename with live preview",
-      },
-      {
-        -- Rename in normal mode, like
-        -- https://blog.viktomas.com/graph/neovim-lsp-rename-normal-mode-keymaps/
-        -- but without the messy autocmd
-        -- and you can return to the command line with <C-c> and see the preview
-        "<space>pr",
-        function()
-          vim.api.nvim_feedkeys(":IncRename " .. vim.fn.expand "<cword>", "n", false)
-          local key = vim.api.nvim_replace_termcodes("<C-f>", true, false, true)
-          vim.api.nvim_feedkeys(key, "c", false)
-          vim.api.nvim_feedkeys("b", "n", false)
-        end,
-        desc = "[R]ename in normal mode",
+        desc = "LSP (R)ename",
       },
     },
     config = true,
@@ -1967,6 +1920,8 @@ return {
     keys = {
       { "<leader>bp", "<Cmd>BufferLineTogglePin<CR>", desc = "Toggle pin" },
       { "<leader>bP", "<Cmd>BufferLineGroupClose ungrouped<CR>", desc = "Delete non-pinned buffers" },
+      { "<Tab>", "<Cmd>BufferLineCycleNext<CR>", desc = "Next buffer" },
+      { "<S-Tab>", "<Cmd>BufferLineCyclePrev<CR>", desc = "Previous buffer" },
     },
     opts = require "kiyoon.bufferline_opts",
   },
@@ -2002,16 +1957,9 @@ return {
     config = function()
       local todo_comments = require "todo-comments"
       todo_comments.setup {
-        -- match TODO(scope):
-        -- See https://github.com/folke/todo-comments.nvim/pull/255
-        highlight = {
-          -- vimgrep regex, supporting the pattern TODO(name):
-          pattern = [[.*<((KEYWORDS)%(\(.{-1,}\))?):]],
-        },
-        search = {
-          -- ripgrep regex, supporting the pattern TODO(name):
-          pattern = [[\b(KEYWORDS)(\(\w*\))*:]],
-        },
+        -- your configuration comes here
+        -- or leave it empty to use the default settings
+        -- refer to the configuration section below
       }
       local tstext = require "nvim-treesitter.textobjects.repeatable_move"
       local next_todo, prev_todo = tstext.make_repeatable_move_pair(todo_comments.jump_next, todo_comments.jump_prev)
@@ -2164,15 +2112,6 @@ return {
     opts = {},
   },
   {
-    "lifthrasiir/hangeul.vim",
-    init = function()
-      vim.cmd [[let hangeul_enabled = 1]]
-    end,
-    config = function()
-      vim.keymap.set("i", "<C-h>", "<Plug>HanMode", { noremap = false, silent = true })
-    end,
-  },
-  {
     "benlubas/molten-nvim",
     version = "^1.0.0", -- use version <2.0.0 to avoid breaking changes
     cmd = {
@@ -2200,7 +2139,6 @@ return {
   {
     -- see the image.nvim readme for more information about configuring this plugin
     "3rd/image.nvim",
-    build = false, -- do not use hererocks
     dependencies = {
       "kiyoon/magick.nvim",
     },
@@ -2337,4 +2275,82 @@ return {
   --     }
   --   end,
   -- },
+  -- add this to the file where you setup your other plugins:
+  -- {
+  --    "monkoose/neocodeium",
+  --    event = "VeryLazy",
+  --    config = function()
+  --      local neocodeium = require("neocodeium")
+  --      neocodeium.setup({
+  --        filetypes = {
+  --          TelescopePrompt = false,
+  --          ["neo-tree-popup"] = false,
+  --          ["dap-repl"] = false,
+  --        },
+  --      })
+  --      -- stylua: ignore start
+  --      vim.keymap.set("i", "<C-g>", function() neocodeium.accept() end)
+  --      vim.keymap.set("i", "<C-j>", function() neocodeium.accept_word() end)
+  --      vim.keymap.set("i", "<C-l>", function() neocodeium.accept_line() end)
+  --      vim.keymap.set("i", "<C-;>", function() neocodeium.cycle_or_complete() end)
+  --      vim.keymap.set("i", "<C-,>", function() neocodeium.cycle_or_complete(-1) end)
+  --      vim.keymap.set("i", "<C-z>", function() neocodeium.clear() end)
+  --      -- stylua: ignore end
+  --    end,
+  --  },
+  {
+    "mikavilpas/yazi.nvim",
+    event = "VeryLazy",
+    keys = {
+      -- 👇 in this section, choose your own keymappings!
+      {
+        "|",
+        "<cmd>Yazi<cr>",
+        desc = "Open yazi at the current file",
+      },
+      {
+        -- Open in the current working directory
+        "\\",
+        "<cmd>Yazi cwd<cr>",
+        desc = "Open the file manager in nvim's working directory",
+      },
+      {
+        -- NOTE: this requires a version of yazi that includes
+        -- https://github.com/sxyazi/yazi/pull/1305 from 2024-07-18
+        "<c-up>",
+        "<cmd>Yazi toggle<cr>",
+        desc = "Resume the last yazi session",
+      },
+    },
+    opts = {
+      -- if you want to open yazi instead of netrw, see below for more info
+      open_for_directories = false,
+      keymaps = {
+        show_help = "<f1>",
+      },
+    },
+  },
+  {
+    "supermaven-inc/supermaven-nvim",
+    config = function()
+      require("supermaven-nvim").setup {
+        keymaps = {
+          accept_suggestion = "<C-g>",
+          clear_suggestion = "<C-]>",
+          accept_word = "<C-j>",
+        },
+        ignore_filetypes = { cpp = true }, -- or { "cpp", }
+        color = {
+          suggestion_color = "#ffffff",
+          cterm = 244,
+        },
+        log_level = "info", -- set to "off" to disable logging completely
+        disable_inline_completion = false, -- disables inline completion for use with cmp
+        disable_keymaps = false, -- disables built in keymaps for more manual control
+        condition = function()
+          return false
+        end, -- condition to check for stopping supermaven, `true` means to stop supermaven when the condition is true.
+      }
+    end,
+  },
 }
