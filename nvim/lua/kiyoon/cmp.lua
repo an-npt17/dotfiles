@@ -71,6 +71,7 @@ cmp.setup {
     { name = "emoji", priority = 8 },
     { name = "buffer", priority = 5 },
     { name = "calc", priority = 3 },
+    { name = "supermaven", priority = 700 },
   },
   sorting = {
     priority_weight = 1.0,

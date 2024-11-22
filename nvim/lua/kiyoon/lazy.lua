@@ -803,8 +803,10 @@ return {
   {
     "lukas-reineke/indent-blankline.nvim",
     tag = "v2.20.8",
-    -- main = "ibl",
-    -- opts = {},
+    main = "ibl",
+    opts = {
+	version = "v2.20.8",
+	},
     event = "BufReadPost",
     config = function()
       vim.opt.list = true
